@@ -5,7 +5,7 @@ import { premiumEmbed, errorEmbed } from "../../lib/embed.js";
 
 export const data = new SlashCommandBuilder()
   .setName("give-premium")
-  .setDescription("[Zenith Support] Grant Zenith Premium to a server")
+  .setDescription("[StarLine Support] Grant StarLine Premium to a server")
   .addStringOption(o =>
     o.setName("guild_id").setDescription("The Discord server ID to grant premium to").setRequired(true)
   )
