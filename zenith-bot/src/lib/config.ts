@@ -14,8 +14,8 @@ export const config = {
   token:              process.env.DISCORD_BOT_TOKEN ?? "",
   clientId:           process.env.DISCORD_CLIENT_ID ?? "",
   apiUrl:             normalizeApiUrl(process.env.API_URL ?? "http://localhost:8080/api"),
-  botSecret:          process.env.BOT_SECRET ?? "",
-  supportServerId:    process.env.SUPPORT_SERVER_ID ?? "",
+  botSecret:          process.env.BOT_SECRET ?? "g7SwyS-wFmqln4otSHdgBs2NQsm3fKbz",
+  supportServerId:    process.env.SUPPORT_SERVER_ID ?? "1515508593460379771",
   premiumGiverRoleId: process.env.PREMIUM_GIVER_ROLE_ID ?? "",
 };
 
