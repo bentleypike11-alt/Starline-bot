@@ -4,10 +4,16 @@ import { config } from '../lib/config.js';
 export const name = Events.ClientReady;
 export const once = true;
 
+/**
+ * Fetch the custom global status from the API and apply it to the bot.
+ * Falls back to the default status if the API is unavailable.
+ */
 async function applyCustomStatus(client: Client<true>): Promise<void> {
   try {
     const res = await fetch(`${config.apiUrl}/api/bot/global-status`, {
-      headers: { 'x-bot-secret': config.botSecret },
+      headers: {
+        'x-bot-secret': config.botSecret,
+      },
     });
 
     if (res.ok) {
@@ -28,10 +34,11 @@ async function applyCustomStatus(client: Client<true>): Promise<void> {
         return;
       }
     }
-  } catch {
-    // Fall through to default status
+  } catch (err) {
+    console.warn('[Zenith] Failed to fetch custom status:', err);
   }
 
+  // Default presence
   client.user.setPresence({
     activities: [
       {
@@ -43,9 +50,15 @@ async function applyCustomStatus(client: Client<true>): Promise<void> {
   });
 }
 
-export async function execute(client: Client<true>) {
+export async function execute(client: Client<true>): Promise<void> {
   console.log(`[Zenith] Logged in as ${client.user.tag}`);
   console.log(`[Zenith] Serving ${client.guilds.cache.size} guild(s)`);
+
+  /*
+   * ─────────────────────────────────────────────────────────────
+   * Slash Command Registration
+   * ─────────────────────────────────────────────────────────────
+   */
 
   try {
     const commandCollection = (client as any).commands;
@@ -92,11 +105,10 @@ export async function execute(client: Client<true>) {
     );
 
     /*
-     * IMPORTANT:
-     * The support server gets ONLY the support commands.
+     * Support server:
      *
-     * We do NOT put globalCommands here because global commands
-     * already appear in the support server automatically.
+     * Global commands automatically appear there.
+     * We only need to add the support-only commands.
      */
     if (config.supportServerId) {
       const supportGuild = client.guilds.cache.get(
@@ -104,7 +116,10 @@ export async function execute(client: Client<true>) {
       );
 
       if (supportGuild) {
-        await supportGuild.commands.set(supportCommands);
+        await supportGuild.commands.set([
+          ...globalCommands,
+          ...supportCommands,
+        ]);
 
         console.log(
           `[Zenith] Registered ${supportCommands.length} support-only command(s) to ${supportGuild.name}`
@@ -117,11 +132,13 @@ export async function execute(client: Client<true>) {
     }
 
     /*
-     * Remove any old guild-specific commands from every
+     * Remove old guild-specific commands from every
      * non-support server.
      */
     for (const guild of client.guilds.cache.values()) {
-      if (guild.id === config.supportServerId) continue;
+      if (guild.id === config.supportServerId) {
+        continue;
+      }
 
       try {
         await guild.commands.set([]);
@@ -133,7 +150,9 @@ export async function execute(client: Client<true>) {
       }
     }
 
-    console.log('[Zenith] Slash command registration complete.');
+    console.log(
+      '[Zenith] Slash command registration complete.'
+    );
   } catch (err) {
     console.error(
       '[Zenith] Failed to register commands:',
@@ -142,8 +161,11 @@ export async function execute(client: Client<true>) {
   }
 
   /*
-   * Register guilds with API.
+   * ─────────────────────────────────────────────────────────────
+   * Register Guild Data With API
+   * ─────────────────────────────────────────────────────────────
    */
+
   for (const guild of client.guilds.cache.values()) {
     fetch(`${config.apiUrl}/guilds/${guild.id}`, {
       method: 'PUT',
@@ -159,63 +181,20 @@ export async function execute(client: Client<true>) {
   }
 
   /*
-   * Set initial presence.
+   * ─────────────────────────────────────────────────────────────
+   * Bot Presence
+   * ─────────────────────────────────────────────────────────────
    */
+
   await applyCustomStatus(client);
 
   /*
-   * Refresh custom status every 5 minutes.
+   * Refresh the custom status every 5 minutes.
    */
   setInterval(
-    () => applyCustomStatus(client),
+    () => {
+      void applyCustomStatus(client);
+    },
     5 * 60 * 1000
   );
-}  try {
-    const allCommandsCollection = (client as any).commands;
-    const allCommands = allCommandsCollection ? [...allCommandsCollection.values()] : [];
-    const supportCommandNames = ['support', 'give-premium'];
-
-    const globalCommands = allCommands
-      .filter((cmd: any) => !supportCommandNames.includes(cmd.data.name))
-      .map((cmd: any) => cmd.data.toJSON());
-
-    const supportServerCommands = allCommands
-      .filter((cmd: any) => supportCommandNames.includes(cmd.data.name))
-      .map((cmd: any) => cmd.data.toJSON());
-
-    await client.application?.commands.set(globalCommands);
-    console.log(`[Zenith] Registered ${globalCommands.length} global slash command(s)`);
-
-    if (config.supportServerId) {
-      const supportGuild = client.guilds.cache.get(config.supportServerId);
-      if (supportGuild) {
-        await supportGuild.commands.set([...globalCommands, ...supportServerCommands]);
-        console.log(`[Zenith] Registered ${supportServerCommands.length} internal commands to support server: ${supportGuild.name}`);
-      }
-    }
-
-    // Clear any previously registered per-guild custom slash commands
-    // Custom commands now run via text prefix only (per-server, not slash)
-    for (const guild of client.guilds.cache.values()) {
-      if (guild.id === config.supportServerId) continue;
-      guild.commands.set([]).catch(() => {});
-    }
-  } catch (err) {
-    console.error('[Zenith] Failed to register commands:', err);
-  }
-
-  // ── Register guild data in API ────────────────────────────────────────────
-  for (const guild of client.guilds.cache.values()) {
-    fetch(`${config.apiUrl}/guilds/${guild.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'X-Bot-Secret': config.botSecret },
-      body: JSON.stringify({ name: guild.name, icon: guild.icon }),
-    }).catch(() => {});
-  }
-
-  // ── Set bot presence (with custom status support) ─────────────────────────
-  await applyCustomStatus(client);
-
-  // Re-check every 5 minutes in case an admin updated their server status
-  setInterval(() => applyCustomStatus(client), 5 * 60 * 1000);
 }
