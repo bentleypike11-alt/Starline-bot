@@ -84,7 +84,7 @@ export async function handlePremiumLimit(
       `You've reached the limit for **${featureInfo.name}**.\n\n` +
       `📊 **Current:** ${currentCount}/${limit}\n` +
       `✨ **Premium:** Unlimited\n\n` +
-      `[Upgrade to Premium](https://zenithbot.up.railway.app/premium) to unlock unlimited access!`
+      `[Upgrade to Premium](https://starline-bot-1.onrender.com//premium) to unlock unlimited access!`
     );
     await interaction.reply({ embeds: [embed], ephemeral: true });
     return false;
