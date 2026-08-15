@@ -3,9 +3,9 @@ import { config } from "../lib/config.js";
 
 export const data = new SlashCommandBuilder()
   .setName("premium")
-  .setDescription("View Zenith Premium features and your server's subscription status");
+  .setDescription("View StarLine Premium features and your server's subscription status");
 
-const DASHBOARD_URL = process.env.DASHBOARD_URL || "https://zenith-web-production.up.railway.app";
+const DASHBOARD_URL = process.env.DASHBOARD_URL || "https://starline-bot-1.onrender.com/";
 
 const FREE_FEATURES = [
   "👥 Up to 25 staff members",
@@ -70,13 +70,13 @@ export async function execute(interaction: ChatInputCommandInteraction) {
   if (isPremium) {
     const embed = new EmbedBuilder()
       .setColor(0xFFD700)
-      .setTitle("⭐ Zenith Premium — Active")
+      .setTitle("⭐ StarLine Premium — Active")
       .setDescription(
         `This server is running **Zenith Premium**!\n\n` +
         `**Your Premium Unlocks:**\n${PREMIUM_FEATURES.join("\n")}`
       )
       .addFields(
-        { name: "📦 Plan", value: plan === "premium" ? "Zenith Premium" : plan.charAt(0).toUpperCase() + plan.slice(1), inline: true },
+        { name: "📦 Plan", value: plan === "premium" ? "StarLine Premium" : plan.charAt(0).toUpperCase() + plan.slice(1), inline: true },
         { name: "✅ Status", value: "Active", inline: true },
         {
           name: "📅 Expires",
@@ -86,7 +86,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
           inline: true,
         }
       )
-      .setFooter({ text: "Zenith Staff Management • Dashboard: " + DASHBOARD_URL })
+      .setFooter({ text: "StarLine Staff Management • Dashboard: " + DASHBOARD_URL })
       .setTimestamp();
 
     if (daysLeft !== null && daysLeft <= 7) {
@@ -102,7 +102,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
   // Not premium — sell them on it
   const embed = new EmbedBuilder()
     .setColor(0xd4af37)
-    .setTitle("💎 Unlock Zenith Premium")
+    .setTitle("💎 Unlock StarLine Premium")
     .setDescription(
       `**Why upgrade?**\n\n` +
       `Zenith Premium gives your server the full staff management suite — from unlimited staff & ranks to automatic strike actions, mass DMs, advanced analytics, and more.\n\n` +
