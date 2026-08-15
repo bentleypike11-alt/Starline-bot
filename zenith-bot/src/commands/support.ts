@@ -8,7 +8,7 @@ const OWNER_IDS = ["961048718612774922"];
 
 export const data = new SlashCommandBuilder()
   .setName("support")
-  .setDescription("[Zenith Support] Support server admin commands")
+  .setDescription("[StarLine Support] Support server admin commands")
   .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
   .addSubcommand(sub =>
     sub.setName("premium-grant")
