@@ -24,7 +24,7 @@ const FEATURES = [
   {
     icon: <Headphones className="w-6 h-6 text-yellow-500" />,
     title: "Priority Support",
-    desc: "Direct access to the Zenith support team with faster response times."
+    desc: "Direct access to the StarLine support team with faster response times."
   },
 ];
 
