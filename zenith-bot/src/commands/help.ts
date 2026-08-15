@@ -6,10 +6,10 @@ import { infoEmbed } from "../lib/embed.js";
 
 export const data = new SlashCommandBuilder()
   .setName("help")
-  .setDescription("Show all Zenith commands");
+  .setDescription("Show all StarLine commands");
 
 export async function execute(interaction: ChatInputCommandInteraction) {
-  const embed = infoEmbed("Zenith — Command Reference")
+  const embed = infoEmbed("Starline — Command Reference")
     .setDescription("The professional ERLC Staff Management System")
     .addFields(
       {
