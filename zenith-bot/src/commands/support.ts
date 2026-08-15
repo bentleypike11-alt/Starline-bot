@@ -4,7 +4,7 @@ import { config } from "../lib/config.js";
 import { successEmbed, errorEmbed, infoEmbed } from "../lib/embed.js";
 
 const SUPPORT_SERVER_ID = config.supportServerId;
-const OWNER_IDS = ["1416209242838401064"];
+const OWNER_IDS = ["961048718612774922"];
 
 export const data = new SlashCommandBuilder()
   .setName("support")
