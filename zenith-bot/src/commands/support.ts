@@ -28,7 +28,7 @@ export const data = new SlashCommandBuilder()
   )
   .addSubcommand(sub =>
     sub.setName("stats")
-      .setDescription("View Zenith global statistics")
+      .setDescription("View StarLine global statistics")
   )
   .addSubcommand(sub =>
     sub.setName("announce")
@@ -38,7 +38,7 @@ export const data = new SlashCommandBuilder()
 
 export async function execute(interaction: ChatInputCommandInteraction) {
   if (interaction.guildId !== SUPPORT_SERVER_ID) {
-    await interaction.reply({ content: "❌ This command is only available in the Zenith support server.", ephemeral: true });
+    await interaction.reply({ content: "❌ This command is only available in the StarLine support server.", ephemeral: true });
     return;
   }
   await interaction.deferReply({ ephemeral: true });
@@ -46,7 +46,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
   const isOwner = OWNER_IDS.includes(interaction.user.id);
   try {
     if (sub === "premium-grant") {
-      if (!isOwner) { await interaction.editReply({ embeds: [errorEmbed("Unauthorized", "Only Zenith owners can grant premium.")] }); return; }
+      if (!isOwner) { await interaction.editReply({ embeds: [errorEmbed("Unauthorized", "Only StarLine owners can grant premium.")] }); return; }
       const guildId = interaction.options.getString("guild_id", true);
       const days    = interaction.options.getInteger("days") ?? 30;
       const res = await api.premium.give(guildId, days);
@@ -71,7 +71,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
       if (!res.ok) throw new Error(await res.text());
       const d = await res.json() as any;
       await interaction.editReply({ embeds: [new EmbedBuilder()
-        .setTitle("📊 Zenith Global Stats")
+        .setTitle("📊 StarLine Global Stats")
         .setColor(0xd4af37)
         .addFields(
           { name: "Servers",     value: String(d.totalGuilds    ?? 0), inline: true },
