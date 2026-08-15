@@ -6,7 +6,7 @@ export default function PrivacyPage() {
       <div className="max-w-3xl mx-auto px-4">
         <Link href="/" className="inline-flex items-center gap-2 mb-8 hover:opacity-80 transition-opacity">
           <div className="w-8 h-8 rounded bg-primary flex items-center justify-center text-white font-bold text-sm">Z</div>
-          <span className="font-bold text-gray-900">Zenith</span>
+          <span className="font-bold text-gray-900">StarLine</span>
         </Link>
         
         <div className="bg-white rounded-3xl border border-gray-200 p-8 md:p-12 shadow-sm prose prose-gray max-w-none">
@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           <h3>2. How We Use Your Information</h3>
           <p>The information we collect is used strictly to:</p>
           <ul>
-            <li>Operate the Zenith bot and dashboard functionality</li>
+            <li>Operate the StarLine bot and dashboard functionality</li>
             <li>Authenticate users via Discord OAuth2</li>
             <li>Provide customer support and troubleshooting</li>
             <li>Maintain service security and prevent abuse</li>
