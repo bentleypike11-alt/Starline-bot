@@ -9,45 +9,85 @@ export const once = true;
  * Falls back to the default status if the API is unavailable.
  */
 async function applyCustomStatus(client: Client<true>): Promise<void> {
-  try {
-    const res = await fetch(`${config.apiUrl}/api/bot/global-status`, {
-      headers: {
-        'x-bot-secret': config.botSecret,
-      },
-    });
-
-    if (res.ok) {
-      const data: any = await res.json();
-
-      if (data.status && data.status.trim()) {
-        client.user.setPresence({
-          activities: [
-            {
-              name: data.status.trim(),
-              type: ActivityType.Custom,
-            },
-          ],
-          status: 'online',
-        });
-
-        console.log(`[Zenith] Applied custom status: ${data.status}`);
-        return;
-      }
-    }
-  } catch (err) {
-    console.warn('[Zenith] Failed to fetch custom status:', err);
-  }
-
-  // Default presence
-  client.user.setPresence({
+  const defaultStatus = {
     activities: [
       {
         name: 'ERLC Staff | z!help',
         type: ActivityType.Watching,
       },
     ],
-    status: 'online',
-  });
+    status: 'online' as const,
+  };
+
+  try {
+    const apiUrl = `${config.apiUrl.replace(/\/+$/, '')}/api/bot/global-status`;
+
+    const res = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'x-bot-secret': config.botSecret,
+      },
+    });
+
+    if (!res.ok) {
+      console.warn(
+        `[Zenith] Custom status API returned HTTP ${res.status} ${res.statusText}`
+      );
+
+      client.user.setPresence(defaultStatus);
+      return;
+    }
+
+    const contentType = res.headers.get('content-type') || '';
+
+    if (!contentType.toLowerCase().includes('application/json')) {
+      console.warn(
+        `[Zenith] Custom status API returned non-JSON response: ${contentType || 'unknown'}`
+      );
+
+      client.user.setPresence(defaultStatus);
+      return;
+    }
+
+    const data: unknown = await res.json();
+
+    const status =
+      typeof data === 'object' &&
+      data !== null &&
+      'status' in data &&
+      typeof (data as { status?: unknown }).status === 'string'
+        ? (data as { status: string }).status.trim()
+        : '';
+
+    if (status) {
+      client.user.setPresence({
+        activities: [
+          {
+            name: status,
+            type: ActivityType.Custom,
+          },
+        ],
+        status: 'online',
+      });
+
+      console.log(`[Zenith] Applied custom status: ${status}`);
+      return;
+    }
+
+    console.log(
+      '[Zenith] No custom status configured. Using default status.'
+    );
+
+    client.user.setPresence(defaultStatus);
+  } catch (err) {
+    console.warn(
+      '[Zenith] Failed to fetch custom status:',
+      err instanceof Error ? err.message : err
+    );
+
+    client.user.setPresence(defaultStatus);
+  }
 }
 
 export async function execute(client: Client<true>): Promise<void> {
@@ -106,9 +146,7 @@ export async function execute(client: Client<true>): Promise<void> {
 
     /*
      * Support server:
-     *
-     * Global commands automatically appear there.
-     * We only need to add the support-only commands.
+     * Global commands + support-only commands.
      */
     if (config.supportServerId) {
       const supportGuild = client.guilds.cache.get(
@@ -189,12 +227,9 @@ export async function execute(client: Client<true>): Promise<void> {
   await applyCustomStatus(client);
 
   /*
-   * Refresh the custom status every 5 minutes.
+   * Refresh custom status every 5 minutes.
    */
-  setInterval(
-    () => {
-      void applyCustomStatus(client);
-    },
-    5 * 60 * 1000
-  );
+  setInterval(() => {
+    void applyCustomStatus(client);
+  }, 5 * 60 * 1000);
 }
