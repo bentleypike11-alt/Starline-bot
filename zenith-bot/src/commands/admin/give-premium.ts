@@ -17,7 +17,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
   // Must be used inside the Zenith support server
   if (config.supportServerId && interaction.guildId !== config.supportServerId) {
     await interaction.reply({
-      content: "❌ This command can only be used inside the **Zenith support server**.",
+      content: "❌ This command can only be used inside the **StarLine support server**.",
       ephemeral: true,
     });
     return;
