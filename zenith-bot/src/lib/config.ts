@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 function normalizeApiUrl(raw: string): string {
-  if (!raw) return "http://localhost:10000/api";
+  if (!raw) return "http://localhost:8000/api";
   if (!raw.startsWith("http://") && !raw.startsWith("https://")) {
     raw = `https://${raw}`;
   }
