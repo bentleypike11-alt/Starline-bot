@@ -1417,13 +1417,80 @@ app.post('/api/guilds/:id/settings', requireAuth, async (req, res) => {
 // ── 20. Bot Stats ──────────────────────────────────────────────────────
 app.get('/api/bot/stats', async (_req, res) => {
   try {
-    if (!DATABASE_URL) return res.json({ guilds: 0, users: 0, status: 'Online' });
+    if (!DATABASE_URL) {
+      return res.json({
+        guilds: 0,
+        users: 0,
+        status: 'Online',
+      });
+    }
+
     const [gR, uR] = await Promise.all([
       query('SELECT COUNT(*) FROM servers WHERE bot_added = TRUE'),
       query('SELECT COUNT(*) FROM users'),
     ]);
-    res.json({ guilds: gR.rows[0].count, users: uR.rows[0].count, status: 'Online' });
-  } catch { res.json({ guilds: 0, users: 0, status: 'Online' }); }
+
+    res.json({
+      guilds: gR.rows[0].count,
+      users: uR.rows[0].count,
+      status: 'Online',
+    });
+  } catch {
+    res.json({
+      guilds: 0,
+      users: 0,
+      status: 'Online',
+    });
+  }
+});
+
+/*
+ * Global bot custom status
+ * Used by the Discord bot to get the current status.
+ */
+app.get('/api/bot/global-status', async (req, res) => {
+  try {
+    const botSecret = req.headers['x-bot-secret'];
+
+    if (
+      !process.env.BOT_SECRET ||
+      botSecret !== process.env.BOT_SECRET
+    ) {
+      return res.status(401).json({
+        error: 'Unauthorized',
+      });
+    }
+
+    if (!DATABASE_URL) {
+      return res.status(500).json({
+        error: 'No database',
+      });
+    }
+
+    const result = await query(`
+      SELECT custom_bot_status
+      FROM servers
+      WHERE custom_bot_status IS NOT NULL
+        AND TRIM(custom_bot_status) <> ''
+      ORDER BY updated_at DESC
+      LIMIT 1
+    `);
+
+    const status = result.rows[0]?.custom_bot_status || null;
+
+    return res.json({
+      status,
+    });
+  } catch (err) {
+    console.error(
+      '[API] Failed to fetch global bot status:',
+      err
+    );
+
+    return res.status(500).json({
+      error: 'Failed to fetch global bot status',
+    });
+  }
 });
 
 // ── 20.5 Application Portal (APAK) ──────────────────────────────────────
