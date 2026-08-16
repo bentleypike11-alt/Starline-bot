@@ -20,7 +20,7 @@ export default function LandingPage() {
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-xl" style={{ background: "linear-gradient(135deg,#d4af37,#ffd700)" }}>
               Z
             </div>
-            <span className="font-bold text-xl tracking-tight" style={{ color: "#b8941f" }}>Zenith</span>
+            <span className="font-bold text-xl tracking-tight" style={{ color: "#b8941f" }}>StarLine</span>
           </div>
           <div className="flex items-center gap-6">
             <Link href="/tos" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Terms</Link>
@@ -47,7 +47,7 @@ export default function LandingPage() {
             <span className="text-primary">serious ERLC servers.</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            Zenith is the professional, no-nonsense hub that every serious staff team needs. 
+            StarLine is the professional, no-nonsense hub that every serious staff team needs. 
             Manage applications, strikes, activity, and ranks from a single precise dashboard.
           </p>
           <div className="flex items-center justify-center gap-4">
@@ -134,7 +134,7 @@ export default function LandingPage() {
             {/* Premium */}
             <div className="bg-gray-50 p-8 rounded-3xl border-2 border-premium shadow-md relative overflow-hidden">
               <div className="absolute top-4 right-4 flex items-center bg-premium/10 text-premium-foreground px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                <Star className="w-3 h-3 mr-1 fill-current" /> Zenith Pro
+                <Star className="w-3 h-3 mr-1 fill-current" /> StarLine Pro
               </div>
               <h3 className="text-2xl font-bold text-gray-900">Premium</h3>
               <p className="text-gray-500 mt-2 min-h-12">Advanced features for established roleplay servers.</p>
@@ -162,7 +162,7 @@ export default function LandingPage() {
             <div className="w-6 h-6 rounded bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-xs">
               Z
             </div>
-            <span className="font-semibold text-gray-900">Zenith</span>
+            <span className="font-semibold text-gray-900">StarLine</span>
           </div>
           <div className="flex items-center gap-5 flex-wrap justify-center">
             <a href="https://discord.com/oauth2/authorize?client_id=1501773810368643172" target="_blank" rel="noreferrer" className="text-sm font-semibold hover:underline" style={{ color: '#d4af37' }}>Add to Discord</a>
