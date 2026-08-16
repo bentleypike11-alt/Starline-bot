@@ -50,7 +50,7 @@ import { Link } from "wouter";
                 style={{ background: 'linear-gradient(135deg, #d4af37, #ffd700)' }}>
                 Z
               </div>
-              <span className="font-bold text-xl tracking-tight" style={{ color: '#d4af37' }}>Zenith</span>
+              <span className="font-bold text-xl tracking-tight" style={{ color: '#d4af37' }}>StarLine</span>
             </Link>
             <Button variant="ghost" onClick={handleLogout} className="text-muted-foreground hover:text-foreground gap-2">
               <LogOut className="w-4 h-4" />
@@ -62,7 +62,7 @@ import { Link } from "wouter";
         <main className="max-w-6xl mx-auto px-4 pt-10">
           <div className="mb-8">
             <h1 className="text-3xl font-extrabold tracking-tight">Select Server</h1>
-            <p className="text-muted-foreground mt-1 text-sm">Choose a server to manage, or add Zenith to a new one.</p>
+            <p className="text-muted-foreground mt-1 text-sm">Choose a server to manage, or add StarLine to a new one.</p>
           </div>
 
           {isLoading ? (
