@@ -41,7 +41,7 @@ export default function LoginPage() {
           </div>
         </Link>
         <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900 tracking-tight">
-          Sign in to Zenith
+          Sign in to StarLine
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           The command center for serious ERLC staff teams.
