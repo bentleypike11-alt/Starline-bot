@@ -13,7 +13,7 @@ import {
 // =========================================================
 // CHANGE YOUR SUPPORT SERVER LINK HERE
 // =========================================================
-const SUPPORT_SERVER_URL = "https://discord.gg/UmDQqXPCfF";
+const SUPPORT_SERVER_URL = "https://discord.gg/Gv2zmPteJ7";
 
 export default function LandingPage() {
   return (
