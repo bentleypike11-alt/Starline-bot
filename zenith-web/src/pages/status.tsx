@@ -54,7 +54,7 @@ export default function StatusPage() {
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ background: 'linear-gradient(135deg,#d4af37,#ffd700)' }}>Z</div>
-            <span className="font-bold tracking-tight" style={{ color: '#b8941f' }}>Zenith</span>
+            <span className="font-bold tracking-tight" style={{ color: '#b8941f' }}>StarLine</span>
           </Link>
           <div className="flex gap-3 text-sm text-muted-foreground">
             <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
@@ -66,7 +66,7 @@ export default function StatusPage() {
       <div className="max-w-3xl mx-auto px-4 pt-24 pb-16 space-y-8">
         <div className="text-center">
           <h1 className="text-3xl font-extrabold tracking-tight mb-2">System Status</h1>
-          <p className="text-muted-foreground">Real-time status and release notes for Zenith</p>
+          <p className="text-muted-foreground">Real-time status and release notes for StarLine</p>
           {status && (
             <p className="text-xs text-muted-foreground mt-2">Last checked: {new Date(status.timestamp).toLocaleTimeString()}</p>
           )}
