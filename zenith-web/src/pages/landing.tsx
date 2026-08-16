@@ -171,7 +171,7 @@ export default function LandingPage() {
             <Link href="/privacy" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">Privacy</Link>
           </div>
           <div className="text-sm text-gray-400">
-            © {new Date().getFullYear()} Zenith. Not affiliated with Discord or ERLC.
+            © {new Date().getFullYear()} StarLine. Not affiliated with Discord or ERLC.
           </div>
         </div>
       </footer>
