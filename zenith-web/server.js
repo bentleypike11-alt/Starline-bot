@@ -38,9 +38,9 @@ const {
 // Use DISCORD_CLIENT_ID as application ID for custom command registration
 const DISCORD_APPLICATION_ID = process.env.DISCORD_APPLICATION_ID || DISCORD_CLIENT_ID;
 
-const DISCORD_BOT_INVITE = `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&permissions=8&scope=bot%20applications.commands`;
+const DISCORD_BOT_INVITE = `https://discord.com/oauth2/authorize?client_id=1517577280434475141&permissions=8&integration_type=0&scope=bot`;
 const SUPPORT_SERVER_ID   = process.env.SUPPORT_SERVER_ID || '1501905192277377214';
-const SUPPORT_SERVER_INVITE = 'https://discord.gg/UmDQqXPCfF';
+const SUPPORT_SERVER_INVITE = 'https://discord.gg/Gv2zmPteJ7';
 const PREMIUM_ROLE_ID     = process.env.PREMIUM_ROLE_ID || '1505732884168704050';
 const INTERACTIONS_PUBLIC_KEY = process.env.INTERACTIONS_PUBLIC_KEY || '';
 
