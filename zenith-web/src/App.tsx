@@ -46,6 +46,7 @@ import TrainingPage from "@/pages/dashboard/training";
 import GoalsPage from "@/pages/dashboard/goals";
 import IncidentsPage from "@/pages/dashboard/incidents";
 import EmbedSenderPage from "@/pages/dashboard/embed-sender";
+
 // New systems
 import PollsPage from "@/pages/dashboard/polls";
 import TasksPage from "@/pages/dashboard/tasks";
@@ -57,62 +58,207 @@ const queryClient = new QueryClient();
 function ProtectedRoute({ component: Component }: { component: any }) {
   const { isAuthenticated, isLoading } = useAuth();
   const [, setLocation] = useLocation();
+
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) setLocation("/login");
+    if (!isLoading && !isAuthenticated) {
+      setLocation("/login");
+    }
   }, [isLoading, isAuthenticated, setLocation]);
+
   if (isLoading || !isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="animate-pulse flex flex-col items-center">
-          <div className="w-12 h-12 bg-gray-200 rounded-xl mb-4" />
-          <div className="h-3 w-24 bg-gray-200 rounded" />
+          <div className="w-12 h-12 bg-muted rounded-xl mb-4" />
+          <div className="h-3 w-24 bg-muted rounded" />
         </div>
       </div>
     );
   }
+
   return <Component />;
 }
 
 function DashboardRoutes({ params }: { params: { guildId: string } }) {
   const guildId = params.guildId;
+
   return (
     <DashboardLayout guildId={guildId}>
       <Switch>
-        <Route path="/dashboard/:guildId"                    component={() => <OverviewPage        guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/staff"              component={() => <StaffPage           guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/applications"       component={() => <ApplicationsPage    guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/strikes"            component={() => <StrikesPage         guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/warnings"           component={() => <WarningsPage        guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/loa"                component={() => <LoaPage             guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/activity"           component={() => <ActivityPage        guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/stats"              component={() => <StatsPage           guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/ranks"              component={() => <RanksPage           guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/config"             component={() => <ConfigPage          guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/blacklist"          component={() => <BlacklistPage       guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/bot-customization"  component={() => <BotCustomizationPage guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/promotions"         component={() => <PromotionsPage      guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/shifts"             component={() => <ShiftsPage          guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/roster"             component={() => <RosterPage          guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/divisions"          component={() => <DivisionsPage       guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/performance"        component={() => <PerformancePage     guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/analytics"          component={() => <AnalyticsPage       guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/manage-premium"     component={() => <ManagePremiumPage   guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/notes"              component={() => <NotesPage           guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/announcements"      component={() => <AnnouncementsPage   guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/handbook"           component={() => <HandbookPage        guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/commendations"      component={() => <CommendationsPage   guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/rank-requests"      component={() => <RankRequestsPage    guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/custom-commands"    component={() => <CustomCommandsPage  guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/inactivity"         component={() => <InactivityPage      guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/training"           component={() => <TrainingPage        guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/goals"              component={() => <GoalsPage           guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/incidents"          component={() => <IncidentsPage       guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/embed-sender"       component={() => <EmbedSenderPage     guildId={guildId} />} />
+        <Route
+          path="/dashboard/:guildId"
+          component={() => <OverviewPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/staff"
+          component={() => <StaffPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/applications"
+          component={() => <ApplicationsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/strikes"
+          component={() => <StrikesPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/warnings"
+          component={() => <WarningsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/loa"
+          component={() => <LoaPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/activity"
+          component={() => <ActivityPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/stats"
+          component={() => <StatsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/ranks"
+          component={() => <RanksPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/config"
+          component={() => <ConfigPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/blacklist"
+          component={() => <BlacklistPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/bot-customization"
+          component={() => (
+            <BotCustomizationPage guildId={guildId} />
+          )}
+        />
+
+        <Route
+          path="/dashboard/:guildId/promotions"
+          component={() => <PromotionsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/shifts"
+          component={() => <ShiftsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/roster"
+          component={() => <RosterPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/divisions"
+          component={() => <DivisionsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/performance"
+          component={() => <PerformancePage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/analytics"
+          component={() => <AnalyticsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/manage-premium"
+          component={() => <ManagePremiumPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/notes"
+          component={() => <NotesPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/announcements"
+          component={() => <AnnouncementsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/handbook"
+          component={() => <HandbookPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/commendations"
+          component={() => <CommendationsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/rank-requests"
+          component={() => <RankRequestsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/custom-commands"
+          component={() => <CustomCommandsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/inactivity"
+          component={() => <InactivityPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/training"
+          component={() => <TrainingPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/goals"
+          component={() => <GoalsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/incidents"
+          component={() => <IncidentsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/embed-sender"
+          component={() => <EmbedSenderPage guildId={guildId} />}
+        />
+
         {/* New systems */}
-        <Route path="/dashboard/:guildId/polls"              component={() => <PollsPage           guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/tasks"              component={() => <TasksPage           guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/directory"          component={() => <DirectoryPage       guildId={guildId} />} />
-        <Route path="/dashboard/:guildId/awards"             component={() => <AwardsPage          guildId={guildId} />} />
+
+        <Route
+          path="/dashboard/:guildId/polls"
+          component={() => <PollsPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/tasks"
+          component={() => <TasksPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/directory"
+          component={() => <DirectoryPage guildId={guildId} />}
+        />
+
+        <Route
+          path="/dashboard/:guildId/awards"
+          component={() => <AwardsPage guildId={guildId} />}
+        />
+
         <Route component={NotFound} />
       </Switch>
     </DashboardLayout>
@@ -123,14 +269,42 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={LandingPage} />
+
       <Route path="/login" component={LoginPage} />
+
       <Route path="/tos" component={TOSPage} />
+
       <Route path="/privacy" component={PrivacyPage} />
+
       <Route path="/premium" component={PremiumPage} />
-      <Route path="/portal/:apak" component={({ params }) => <PortalPage apak={params.apak} />} />
+
+      <Route
+        path="/portal/:apak"
+        component={({ params }) => (
+          <PortalPage apak={params.apak} />
+        )}
+      />
+
       <Route path="/status" component={StatusPage} />
-      <Route path="/servers" component={() => <ProtectedRoute component={ServersPage} />} />
-      <Route path="/dashboard/:guildId/*?" component={({ params }) => <ProtectedRoute component={() => <DashboardRoutes params={params as any} />} />} />
+
+      <Route
+        path="/servers"
+        component={() => (
+          <ProtectedRoute component={ServersPage} />
+        )}
+      />
+
+      <Route
+        path="/dashboard/:guildId/*?"
+        component={({ params }) => (
+          <ProtectedRoute
+            component={() => (
+              <DashboardRoutes params={params as any} />
+            )}
+          />
+        )}
+      />
+
       <Route component={NotFound} />
     </Switch>
   );
@@ -138,13 +312,22 @@ function Router() {
 
 export default function App() {
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="dark"
+      forcedTheme="dark"
+      enableSystem={false}
+      disableTransitionOnChange
+    >
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <TooltipProvider>
-            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <WouterRouter
+              base={import.meta.env.BASE_URL.replace(/\/$/, "")}
+            >
               <Router />
             </WouterRouter>
+
             <Toaster />
           </TooltipProvider>
         </AuthProvider>
