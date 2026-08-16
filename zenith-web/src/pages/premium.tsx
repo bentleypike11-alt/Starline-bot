@@ -90,7 +90,7 @@ export default function PremiumPage() {
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xl">Z</div>
-            <span className="font-bold text-xl tracking-tight text-gray-900">Zenith</span>
+            <span className="font-bold text-xl tracking-tight text-gray-900">StarLine</span>
           </Link>
           <Link href="/servers">
             <Button variant="outline" size="sm" className="gap-2">
@@ -105,10 +105,10 @@ export default function PremiumPage() {
           {/* Hero */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-700 text-sm font-semibold mb-6">
-              <Star className="w-4 h-4 fill-current" /> Zenith Premium
+              <Star className="w-4 h-4 fill-current" /> StarLine Premium
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
-              Unlock the full power of <span className="text-yellow-500">Zenith Pro</span>
+              Unlock the full power of <span className="text-yellow-500">StarLine Pro</span>
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Everything your staff team needs to run at the highest level. No limits, no compromises.
